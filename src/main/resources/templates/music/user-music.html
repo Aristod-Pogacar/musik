@@ -1,0 +1,46 @@
+<!-- user-musics.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Musiques de l'utilisateur</title>
+</head>
+<body>
+
+<h1 th:text="'Musiques de ' + ${user.nom}"></h1>
+
+<a th:href="@{/music/create}">➕ Ajouter une musique</a>
+<br><br>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Album</th>
+            <th>Fichier</th>
+            <th>Catégorie</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="m : ${songs}">
+            <td th:text="${m.id}"></td>
+            <td th:text="${m.titre}"></td>
+            <td th:text="${m.album}"></td>
+            <td th:text="${m.file}"></td>
+            <td th:text="${m.category.name}"></td>
+            <td>
+                <a th:href="@{/music/songs/{id}(id=${m.id})}">🎵 Détails</a>
+                <a th:href="@{/music/edit/{id}(id=${m.id})}">✏</a>
+                <a th:href="@{/music/delete/{id}(id=${m.id})}">🗑</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<a href="/users">⬅ Retour aux utilisateurs</a>
+
+</body>
+</html>

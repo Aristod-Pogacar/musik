@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter une Musique</title>
+</head>
+<body>
+
+<h1>Ajouter une Musique</h1>
+
+<form th:action="@{/music/create}" method="post" th:object="${music}">
+
+    <!-- ✅ Titre -->
+    <label>Titre :</label><br>
+    <input type="text" th:field="*{titre}" required><br><br>
+
+    <!-- ✅ Album -->
+    <label>Album :</label><br>
+    <input type="text" th:field="*{album}" required><br><br>
+
+    <!-- ✅ Fichier -->
+    <label>Fichier (nom ou URL) :</label><br>
+    <input type="text" th:field="*{file}" required><br><br>
+
+    <!-- ✅ Catégorie -->
+    <label>Catégorie :</label><br>
+    <select th:field="*{category}" required>
+        <option value="">-- Sélectionner une catégorie --</option>
+        <option th:each="c : ${categories}"
+                th:value="${c.id}"
+                th:text="${c.name}">
+        </option>
+    </select><br><br>
+
+    <!-- ✅ Utilisateur -->
+    <label>Utilisateur :</label><br>
+    <select th:field="*{user}" required>
+        <option value="">-- Sélectionner un utilisateur --</option>
+        <option th:each="u : ${users}"
+                th:value="${u.id}"
+                th:text="${u.nom}">
+        </option>
+    </select><br><br>
+
+    <!-- ✅ Bouton -->
+    <button type="submit">Enregistrer</button>
+
+</form>
+
+<br>
+<a href="/musics">⬅ Retour à la liste</a>
+
+</body>
+</html>

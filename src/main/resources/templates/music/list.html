@@ -1,0 +1,43 @@
+<!-- musics.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Musiques</title>
+</head>
+<body>
+
+<h1>Liste des Musiques</h1>
+
+<a href="/musics/create">➕ Ajouter</a>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Album</th>
+            <th>Fichier</th>
+            <th>Catégorie</th>
+            <th>Utilisateur</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="m : ${songs}">
+            <td th:text="${m.id}"></td>
+            <td th:text="${m.titre}"></td>
+            <td th:text="${m.album}"></td>
+            <td th:text="${m.file}"></td>
+            <td th:text="${m.category.name}"></td>
+            <td th:text="${m.user.nom}"></td>
+            <td>
+                <a th:href="@{/musics/edit/{id}(id=${m.id})}">✏</a>
+                <a th:href="@{/musics/delete/{id}(id=${m.id})}">🗑</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer une nouvelle catégorie</title>
+</head>
+<body>
+    <h1>Créer une nouvelle catégorie</h1>
+    <form action="@{/categories}" method="post">
+        <div>
+            <label for="nom">Nom de la catégorie:</label>
+            <input type="text" id="nom" name="nom" required>
+        </div>
+        <button type="submit">Ajouter la catégorie</button>
+    </form>
+</body>
+</html>

@@ -33,23 +33,23 @@ public class MusicController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/songs")
+    @GetMapping("/musics")
     public String getAllSongs(Model model) {
-        model.addAttribute("songs", musicService.getAllMusic());
+        model.addAttribute("musics", musicService.getAllMusic());
         return "music/list";
     }
 
-    @GetMapping("/songs/{id}")
+    @GetMapping("/musics/{id}")
     public String getSongDetails(@PathVariable Long id, Model model) {
-        musicService.getMusicById(id).ifPresent(song -> model.addAttribute("song", song));
+        musicService.getMusicById(id).ifPresent(music -> model.addAttribute("music", music));
         return "music/view";
     }
 
     @GetMapping("/user/{userId}")
     public String getMusicByUser(@PathVariable Long userId, Model model) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        List<Music> songs = musicService.getMusicByUser(user);
-        model.addAttribute("songs", songs);
+        List<Music> musics = musicService.getMusicByUser(user);
+        model.addAttribute("musics", musics);
         model.addAttribute("user", user);
         return "music/user-music";
     }
@@ -57,8 +57,8 @@ public class MusicController {
     @GetMapping("/category/{categoryId}")
     public String getMusicByCategory(@PathVariable Long categoryId, Model model) {
         Category category = categoryService.findCategoryById(categoryId);
-        List<Music> songs = musicService.getMusicByCategory(category);
-        model.addAttribute("songs", songs);
+        List<Music> musics = musicService.getMusicByCategory(category);
+        model.addAttribute("musics", musics);
         model.addAttribute("category", category);
         return "music/category-music";
     }
@@ -75,7 +75,7 @@ public class MusicController {
     public String createUser(@ModelAttribute("music") Music music, RedirectAttributes redirectAttributes) {
         musicService.createMusic(music);
         redirectAttributes.addFlashAttribute("message", "Music créé avec succès !");
-        return "redirect:/music/songs";
+        return "redirect:/music/musics";
     }
 
     @GetMapping("/{id}/edit")
@@ -83,7 +83,7 @@ public class MusicController {
         Optional<Music> music = musicService.getMusicById(id);
         if (music.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Music non trouvé pour édition.");
-            return "redirect:/music/songs";
+            return "redirect:/music/musics";
         }
         model.addAttribute("music", music.get());
         model.addAttribute("categories", categoryService.findAllCategories());
@@ -96,14 +96,14 @@ public class MusicController {
         music.setId(id); // Ensure the ID from path variable is set to the music object
         musicService.updateMusic(id, music); // Assuming this method handles the update logic
         redirectAttributes.addFlashAttribute("message", "Music mis à jour avec succès !");
-        return "redirect:/music/songs";
+        return "redirect:/music/musics";
     }
 
     @GetMapping("/{id}/delete") // Consider using @PostMapping for delete operations for better practice
     public String deleteMusic(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         musicService.deleteMusic(id);
         redirectAttributes.addFlashAttribute("message", "Music supprimé avec succès !");
-        return "redirect:/music/songs";
+        return "redirect:/music/musics";
     }
 
 }

@@ -8,7 +8,7 @@
 
 <h1>Ajouter une Musique</h1>
 
-<form th:action="@{/music/{id}(id=${category.id})}" method="post" th:object="${music}">
+<form th:action="@{/music/{id}(id=${music.id})}" method="post" th:object="${music}">
 
     <!-- ✅ Titre -->
     <label>Titre :</label><br>

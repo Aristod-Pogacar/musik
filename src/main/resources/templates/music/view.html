@@ -7,21 +7,21 @@
 </head>
 <body>
 
-<h1 th:text="${song.titre}"></h1>
+<h1 th:text="${music.titre}"></h1>
 
-<p><strong>Album :</strong> <span th:text="${song.album}"></span></p>
-<p><strong>Catégorie :</strong> <span th:text="${song.category.name}"></span></p>
-<p><strong>Utilisateur :</strong> <span th:text="${song.user.nom}"></span></p>
+<p><strong>Album :</strong> <span th:text="${music.album}"></span></p>
+<p><strong>Catégorie :</strong> <span th:text="${music.category.name}"></span></p>
+<p><strong>Utilisateur :</strong> <span th:text="${music.user.nom}"></span></p>
 
 <h3>🎵 Lecture</h3>
 
 <audio controls style="width: 100%;">
-    <source th:src="${song.file}" type="audio/mpeg">
+    <source th:src="${music.file}" type="audio/mpeg">
     Votre navigateur ne supporte pas la lecture audio.
 </audio>
 
 <br><br>
-<a href="/music/songs">⬅ Retour à la liste</a>
+<a href="/music/musics">⬅ Retour à la liste</a>
 
 </body>
 </html>

@@ -73,7 +73,7 @@ public class CategoryController {
         return "redirect:/categories";
     }
 
-    @GetMapping("/{id}/delete") // Consider using @PostMapping for delete operations for better practice
+    @PostMapping("/{id}/delete") // Consider using @PostMapping for delete operations for better practice
     public String deleteCategory(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         categoryService.deleteCategory(id);
         redirectAttributes.addFlashAttribute("message", "Categorie supprimé avec succès !");

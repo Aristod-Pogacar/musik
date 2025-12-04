@@ -43,7 +43,7 @@
                 <td th:text="${category.nom}">Nom de la Catégorie</td>
                 <td class="actions">
                     <a th:href="@{/categories/{id}/edit(id=${category.id})}" class="edit-btn">Modifier</a>
-                    <form th:action="@{/categories/{id}/delete(id=${category.id})}" th:method="get" style="display:inline;">
+                    <form th:action="@{/categories/{id}/delete(id=${category.id})}" th:method="post" style="display:inline;">
                         <button type="submit" class="delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?');">Supprimer</button>
                     </form>
                 </td>

@@ -122,7 +122,7 @@ public class MusicController {
         return "music/edit";
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/edit")
     public String updateMusic(@PathVariable Long id, @ModelAttribute("music") Music music, RedirectAttributes redirectAttributes) {
         music.setId(id); // Ensure the ID from path variable is set to the music object
         musicService.updateMusic(id, music); // Assuming this method handles the update logic
@@ -130,7 +130,7 @@ public class MusicController {
         return "redirect:/music/";
     }
 
-    @GetMapping("/{id}/delete") // Consider using @PostMapping for delete operations for better practice
+    @PostMapping("/{id}/delete") // Consider using @PostMapping for delete operations for better practice
     public String deleteMusic(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         musicService.deleteMusic(id);
         redirectAttributes.addFlashAttribute("message", "Music supprimé avec succès !");

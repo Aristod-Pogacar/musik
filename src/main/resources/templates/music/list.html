@@ -31,7 +31,9 @@
             <td th:text="${m.user.nom}"></td>
             <td>
                 <a th:href="@{/music/edit/{id}(id=${m.id})}">✏</a>
-                <a th:href="@{/music/delete/{id}(id=${m.id})}">🗑</a>
+                <form th:action="@{/music/delete/{id}(id=${m.id})}" th:method="post" style="display:inline;">
+                    <button type="submit" class="delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette musique ?');">🗑</button>
+                </form>
             </td>
         </tr>
     </tbody>

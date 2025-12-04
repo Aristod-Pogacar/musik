@@ -61,7 +61,7 @@ public class UserController {
         return "users/edit"; // Renders src/main/resources/templates/users/edit.html
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/edit")
     public String updateUser(@PathVariable Long id, @ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
         user.setId(id); // Ensure the ID from path variable is set to the user object
         userService.updateUser(id, user); // Assuming this method handles the update logic

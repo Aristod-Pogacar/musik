@@ -33,7 +33,9 @@
                 <td th:text="${user.email}">john.doe@example.com</td>
                 <td>
                     <a th:href="@{/users/{id}/edit(id=${user.id})}">Modifier</a>
-                    <a th:href="@{/users/{id}/delete(id=${user.id})}">Supprimer</a>
+                    <form th:action="@{/users/{id}/delete(id=${user.id})}" method="post">
+                        <button type="submit">Supprimer</button>
+                    </form>
                 </td>
             </tr>
         </tbody>

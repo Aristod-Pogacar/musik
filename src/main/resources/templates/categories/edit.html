@@ -17,7 +17,7 @@
 <body>
     <h1>Modifier la Catégorie</h1>
 
-    <form th:action="@{/categories/update}" th:object="${category}" method="post">
+    <form th:action="@{/categories/{id}/edit(id=${category.id})}" th:object="${category}" method="post">
         <input type="hidden" th:field="*{id}" />
 
         <div>

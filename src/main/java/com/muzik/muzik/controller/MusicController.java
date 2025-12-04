@@ -7,6 +7,11 @@ import com.muzik.muzik.Repository.UserRepository;
 import com.muzik.muzik.service.CategoryService;
 import com.muzik.muzik.service.MusicService;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +22,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -33,13 +40,13 @@ public class MusicController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/musics")
+    @GetMapping
     public String getAllSongs(Model model) {
         model.addAttribute("musics", musicService.getAllMusic());
         return "music/list";
     }
 
-    @GetMapping("/musics/{id}")
+    @GetMapping("/{id}")
     public String getSongDetails(@PathVariable Long id, Model model) {
         musicService.getMusicById(id).ifPresent(music -> model.addAttribute("music", music));
         return "music/view";
@@ -71,11 +78,35 @@ public class MusicController {
         return "music/create";
     }
 
-    @PostMapping
-    public String createUser(@ModelAttribute("music") Music music, RedirectAttributes redirectAttributes) {
+    @PostMapping("/create")
+    public String createUser(@ModelAttribute("music") Music music,
+                            @RequestParam("audioFile") MultipartFile audioFile,
+                            RedirectAttributes redirectAttributes) {
+
+        if (!audioFile.isEmpty()) {
+            try {
+                String fileName = System.currentTimeMillis() + "_" + audioFile.getOriginalFilename();
+                Path uploadPath = Paths.get("uploads");
+
+                if (!Files.exists(uploadPath)) {
+                    Files.createDirectories(uploadPath);
+                }
+
+                Files.copy(audioFile.getInputStream(),
+                        uploadPath.resolve(fileName),
+                        StandardCopyOption.REPLACE_EXISTING);
+
+                // ✅ ON STOCKE LE CHEMIN STRING
+                music.setFile("/uploads/" + fileName);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         musicService.createMusic(music);
-        redirectAttributes.addFlashAttribute("message", "Music créé avec succès !");
-        return "redirect:/music/musics";
+        redirectAttributes.addFlashAttribute("message", "Music créée avec succès !");
+        return "redirect:/music/";
     }
 
     @GetMapping("/{id}/edit")
@@ -83,7 +114,7 @@ public class MusicController {
         Optional<Music> music = musicService.getMusicById(id);
         if (music.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Music non trouvé pour édition.");
-            return "redirect:/music/musics";
+            return "redirect:/music/";
         }
         model.addAttribute("music", music.get());
         model.addAttribute("categories", categoryService.findAllCategories());
@@ -96,14 +127,14 @@ public class MusicController {
         music.setId(id); // Ensure the ID from path variable is set to the music object
         musicService.updateMusic(id, music); // Assuming this method handles the update logic
         redirectAttributes.addFlashAttribute("message", "Music mis à jour avec succès !");
-        return "redirect:/music/musics";
+        return "redirect:/music/";
     }
 
     @GetMapping("/{id}/delete") // Consider using @PostMapping for delete operations for better practice
     public String deleteMusic(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         musicService.deleteMusic(id);
         redirectAttributes.addFlashAttribute("message", "Music supprimé avec succès !");
-        return "redirect:/music/musics";
+        return "redirect:/music/";
     }
 
 }

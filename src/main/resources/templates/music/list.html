@@ -9,7 +9,7 @@
 
 <h1>Liste des Musiques</h1>
 
-<a href="/musics/create">➕ Ajouter</a>
+<a th:href="@{/music/create}">➕ Ajouter</a>
 
 <table border="1">
     <thead>
@@ -17,7 +17,6 @@
             <th>ID</th>
             <th>Titre</th>
             <th>Album</th>
-            <th>Fichier</th>
             <th>Catégorie</th>
             <th>Utilisateur</th>
             <th>Actions</th>
@@ -28,12 +27,11 @@
             <td th:text="${m.id}"></td>
             <td th:text="${m.titre}"></td>
             <td th:text="${m.album}"></td>
-            <td th:text="${m.file}"></td>
-            <td th:text="${m.category.name}"></td>
+            <td th:text="${m.category.nom}"></td>
             <td th:text="${m.user.nom}"></td>
             <td>
-                <a th:href="@{/musics/edit/{id}(id=${m.id})}">✏</a>
-                <a th:href="@{/musics/delete/{id}(id=${m.id})}">🗑</a>
+                <a th:href="@{/music/edit/{id}(id=${m.id})}">✏</a>
+                <a th:href="@{/music/delete/{id}(id=${m.id})}">🗑</a>
             </td>
         </tr>
     </tbody>

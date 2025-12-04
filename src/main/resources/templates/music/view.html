@@ -10,7 +10,7 @@
 <h1 th:text="${music.titre}"></h1>
 
 <p><strong>Album :</strong> <span th:text="${music.album}"></span></p>
-<p><strong>Catégorie :</strong> <span th:text="${music.category.name}"></span></p>
+<p><strong>Catégorie :</strong> <span th:text="${music.category.nom}"></span></p>
 <p><strong>Utilisateur :</strong> <span th:text="${music.user.nom}"></span></p>
 
 <h3>🎵 Lecture</h3>
@@ -21,7 +21,7 @@
 </audio>
 
 <br><br>
-<a href="/music/musics">⬅ Retour à la liste</a>
+<a th:href="@{/music}">⬅ Retour à la liste</a>
 
 </body>
 </html>

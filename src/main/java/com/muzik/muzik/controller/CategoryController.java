@@ -36,7 +36,7 @@ public class CategoryController {
         return "categories/create";
     }
 
-    @PostMapping
+    @PostMapping("/new")
     public String createUser(@ModelAttribute("category") Category category, RedirectAttributes redirectAttributes) {
         categoryService.saveCategory(category);
         redirectAttributes.addFlashAttribute("message", "Categorie créé avec succès !");
@@ -65,7 +65,7 @@ public class CategoryController {
         return "categories/edit";
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/edit")
     public String updateCategory(@PathVariable Long id, @ModelAttribute("category") Category category, RedirectAttributes redirectAttributes) {
         category.setId(id); // Ensure the ID from path variable is set to the user object
         categoryService.updateCategory(id, category); // Assuming this method handles the update logic

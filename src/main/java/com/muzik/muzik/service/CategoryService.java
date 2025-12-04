@@ -2,9 +2,12 @@ package com.muzik.muzik.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.muzik.muzik.Repository.CategoryRepository;
 import com.muzik.muzik.Entity.Category;
 
+@Service
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 

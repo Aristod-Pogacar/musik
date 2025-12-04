@@ -8,7 +8,7 @@
 
 <h1>Ajouter une Musique</h1>
 
-<form th:action="@{/music/create}" method="post" th:object="${music}">
+<form th:action="@{/music/create}" method="post" th:object="${music}" enctype="multipart/form-data">
 
     <!-- ✅ Titre -->
     <label>Titre :</label><br>
@@ -20,7 +20,7 @@
 
     <!-- ✅ Fichier -->
     <label>Fichier (nom ou URL) :</label><br>
-    <input type="text" th:field="*{file}" required><br><br>
+    <input type="file" name="audioFile" accept="audio/*" required><br><br>
 
     <!-- ✅ Catégorie -->
     <label>Catégorie :</label><br>
@@ -28,7 +28,7 @@
         <option value="">-- Sélectionner une catégorie --</option>
         <option th:each="c : ${categories}"
                 th:value="${c.id}"
-                th:text="${c.name}">
+                th:text="${c.nom}">
         </option>
     </select><br><br>
 
@@ -48,7 +48,7 @@
 </form>
 
 <br>
-<a href="/musics">⬅ Retour à la liste</a>
+<a th:href="@{/music}">⬅ Retour à la liste</a>
 
 </body>
 </html>

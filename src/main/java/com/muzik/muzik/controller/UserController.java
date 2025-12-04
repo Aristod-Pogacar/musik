@@ -32,7 +32,7 @@ public class UserController {
         return "users/create"; // Renders src/main/resources/templates/users/create.html
     }
 
-    @PostMapping
+    @PostMapping("/new")
     public String createUser(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
         userService.saveUser(user);
         redirectAttributes.addFlashAttribute("message", "Utilisateur créé avec succès !");

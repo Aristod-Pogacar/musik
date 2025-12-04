@@ -1,6 +1,6 @@
 <div class="container">
     <h2>Inscription Utilisateur</h2>
-    <form action="@{/users}" method="post">
+    <form th:action="@{/users/new}" method="post">
         <div class="form-group">
             <label for="nom">Nom :</label>
             <input type="text" id="nom" name="nom" class="form-control" required>

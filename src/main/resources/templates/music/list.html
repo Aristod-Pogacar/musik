@@ -68,7 +68,7 @@
 
     <h1>Liste des Musiques</h1>
 
-    <a th:href="@{/music/create}">➕ Ajouter</a>
+    <a th:href="@{/music/create}" class="add-btn">➕ Ajouter</a>
 
     <table border="1">
         <thead>
@@ -89,7 +89,7 @@
                 <td th:text="${m.category.nom}"></td>
                 <td th:text="${m.user.nom}"></td>
                 <td>
-                    <a th:href="@{/music/edit/{id}(id=${m.id})}">Modifier</a>
+                    <a th:href="@{/music/edit/{id}(id=${m.id})}" class="edit-btn">Modifier</a>
                     <form th:action="@{/music/delete/{id}(id=${m.id})}" th:method="post" style="display:inline;">
                         <button type="submit" class="delete-btn"
                             onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette musique ?');">Supprimer</button>

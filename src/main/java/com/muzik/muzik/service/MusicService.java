@@ -14,6 +14,7 @@ import java.util.Optional;
 public class MusicService {
 
     private final MusicRepository musicRepository;
+
     public MusicService(MusicRepository musicRepository) {
         this.musicRepository = musicRepository;
     }
@@ -34,6 +35,7 @@ public class MusicService {
         return musicRepository.findById(id)
                 .map(music -> {
                     music.setTitre(musicDetails.getTitre());
+                    music.setArtiste(musicDetails.getArtiste());
                     music.setAlbum(musicDetails.getAlbum());
                     music.setFile(musicDetails.getFile());
                     music.setCategory(musicDetails.getCategory());

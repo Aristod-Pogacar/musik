@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Catégories - Muzik</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Include navbar styles -->
+    <div th:replace="~{fragments/navbar :: navbar-styles}"></div>
+
     <style>
         * {
             margin: 0;
@@ -25,20 +29,16 @@
             margin: 0 auto;
         }
 
-        .header {
+        .page-header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             padding: 30px;
             border-radius: 20px 20px 0 0;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
+            margin-top: 20px;
         }
 
-        .header h1 {
+        .page-header h1 {
             font-size: 32px;
             font-weight: 700;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -48,43 +48,6 @@
             display: flex;
             align-items: center;
             gap: 12px;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 12px;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
-        }
-
-        .btn-back {
-            background: rgba(0, 0, 0, 0.05);
-            color: #666;
-        }
-
-        .btn-back:hover {
-            background: rgba(0, 0, 0, 0.1);
         }
 
         .content {
@@ -203,11 +166,35 @@
             font-weight: 600;
         }
 
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
+            table {
+                font-size: 12px;
+            }
+
+            th,
+            td {
+                padding: 10px;
             }
         }
     </style>
@@ -215,19 +202,14 @@
 
 <body>
     <div class="container">
-        <div class="header">
+        <!-- Include navbar -->
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+        <div class="page-header">
             <h1>
                 <span>📁</span>
                 Liste des Catégories
             </h1>
-            <div class="header-actions">
-                <a th:href="@{/categories/new}" class="btn btn-primary">
-                    ➕ Ajouter une catégorie
-                </a>
-                <a th:href="@{/music}" class="btn btn-back">
-                    ⬅ Retour aux musiques
-                </a>
-            </div>
         </div>
 
         <div class="content">
@@ -265,7 +247,7 @@
                 <h2>Aucune catégorie</h2>
                 <p>Commencez par ajouter votre première catégorie !</p>
                 <br>
-                <a th:href="@{/categories/new}" class="btn btn-primary">➕ Ajouter une catégorie</a>
+                <a th:href="@{/categories/new}" class="btn-primary">➕ Ajouter une catégorie</a>
             </div>
         </div>
     </div>

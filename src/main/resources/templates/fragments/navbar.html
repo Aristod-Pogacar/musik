@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <!-- Navigation Fragment -->
+    <nav th:fragment="navbar" class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a th:href="@{/music}" class="brand-link">
+                    <span class="brand-icon">🎵</span>
+                    <span class="brand-text">Muzik</span>
+                </a>
+            </div>
+
+            <div class="nav-links">
+                <a th:href="@{/music}" class="nav-link">
+                    <span>🎶</span>
+                    <span>Musiques</span>
+                </a>
+                <a th:href="@{/music/create}" class="nav-link">
+                    <span>➕</span>
+                    <span>Ajouter</span>
+                </a>
+                <a th:href="@{/categories}" class="nav-link">
+                    <span>📁</span>
+                    <span>Catégories</span>
+                </a>
+                <a th:href="@{/logout}" class="nav-link nav-link-logout">
+                    <span>🚪</span>
+                    <span>Déconnexion</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Styles Fragment -->
+    <div th:fragment="navbar-styles">
+        <style>
+            .navbar {
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+                padding: 16px 0;
+                margin-bottom: 30px;
+                border-radius: 16px;
+                position: sticky;
+                top: 20px;
+                z-index: 1000;
+            }
+
+            .nav-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 30px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .nav-brand {
+                flex-shrink: 0;
+            }
+
+            .brand-link {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                text-decoration: none;
+                transition: all 0.3s ease;
+            }
+
+            .brand-link:hover {
+                transform: scale(1.05);
+            }
+
+            .brand-icon {
+                font-size: 32px;
+                filter: drop-shadow(0 2px 8px rgba(102, 126, 234, 0.3));
+            }
+
+            .brand-text {
+                font-size: 28px;
+                font-weight: 700;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+            }
+
+            .nav-link {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 10px 20px;
+                border-radius: 10px;
+                text-decoration: none;
+                color: #333;
+                font-weight: 600;
+                font-size: 14px;
+                transition: all 0.3s ease;
+                background: transparent;
+            }
+
+            .nav-link:hover {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            }
+
+            .nav-link span:first-child {
+                font-size: 18px;
+            }
+
+            .nav-link-logout {
+                background: rgba(239, 68, 68, 0.1);
+                color: #dc2626;
+            }
+
+            .nav-link-logout:hover {
+                background: #ef4444;
+                color: white;
+            }
+
+            /* Responsive */
+            @media (max-width: 768px) {
+                .nav-container {
+                    flex-direction: column;
+                    gap: 16px;
+                }
+
+                .nav-links {
+                    flex-wrap: wrap;
+                    justify-content: center;
+                }
+
+                .brand-text {
+                    font-size: 24px;
+                }
+
+                .brand-icon {
+                    font-size: 28px;
+                }
+
+                .nav-link span:last-child {
+                    display: none;
+                }
+
+                .nav-link {
+                    padding: 10px 16px;
+                }
+            }
+        </style>
+    </div>
+</body>
+
+</html>

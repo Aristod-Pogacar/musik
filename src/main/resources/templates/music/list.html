@@ -260,6 +260,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Titre</th>
+                        <th>Artiste</th>
                         <th>Album</th>
                         <th>Catégorie</th>
                         <th>Utilisateur</th>
@@ -270,6 +271,7 @@
                     <tr th:each="m : ${musics}">
                         <td><span class="badge" th:text="${m.id}"></span></td>
                         <td><strong th:text="${m.titre}"></strong></td>
+                        <td th:text="${m.artiste}"></td>
                         <td th:text="${m.album}"></td>
                         <td th:text="${m.category.nom}"></td>
                         <td th:text="${m.user.nom}"></td>

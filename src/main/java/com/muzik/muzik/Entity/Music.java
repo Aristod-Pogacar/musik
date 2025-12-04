@@ -15,24 +15,26 @@ public class Music {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titre;
+    private String artiste;
 
     private String album;
     private String file;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")   // ✅ clé étrangère
+    @JoinColumn(name = "category_id") // ✅ clé étrangère
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")   // ✅ clé étrangère
+    @JoinColumn(name = "user_id") // ✅ clé étrangère
     private User user;
 
     public Music() {
     }
 
-    public Music(Long id, String titre, String album, String file, Category category, User user) {
+    public Music(Long id, String titre, String artiste, String album, String file, Category category, User user) {
         this.id = id;
         this.titre = titre;
+        this.artiste = artiste;
         this.album = album;
         this.file = file;
         this.category = category;
@@ -53,6 +55,14 @@ public class Music {
 
     public void setTitre(String titre) {
         this.titre = titre;
+    }
+
+    public String getArtiste() {
+        return artiste;
+    }
+
+    public void setArtiste(String artiste) {
+        this.artiste = artiste;
     }
 
     public String getAlbum() {

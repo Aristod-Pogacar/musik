@@ -80,8 +80,8 @@ public class MusicController {
 
     @PostMapping("/create")
     public String createUser(@ModelAttribute("music") Music music,
-                            @RequestParam("audioFile") MultipartFile audioFile,
-                            RedirectAttributes redirectAttributes) {
+            @RequestParam("audioFile") MultipartFile audioFile,
+            RedirectAttributes redirectAttributes) {
 
         if (!audioFile.isEmpty()) {
             try {
@@ -106,7 +106,7 @@ public class MusicController {
 
         musicService.createMusic(music);
         redirectAttributes.addFlashAttribute("message", "Music créée avec succès !");
-        return "redirect:/music/";
+        return "redirect:/music";
     }
 
     @GetMapping("/{id}/edit")
@@ -114,7 +114,7 @@ public class MusicController {
         Optional<Music> music = musicService.getMusicById(id);
         if (music.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Music non trouvé pour édition.");
-            return "redirect:/music/";
+            return "redirect:/music";
         }
         model.addAttribute("music", music.get());
         model.addAttribute("categories", categoryService.findAllCategories());
@@ -123,18 +123,19 @@ public class MusicController {
     }
 
     @PostMapping("/{id}/edit")
-    public String updateMusic(@PathVariable Long id, @ModelAttribute("music") Music music, RedirectAttributes redirectAttributes) {
+    public String updateMusic(@PathVariable Long id, @ModelAttribute("music") Music music,
+            RedirectAttributes redirectAttributes) {
         music.setId(id); // Ensure the ID from path variable is set to the music object
         musicService.updateMusic(id, music); // Assuming this method handles the update logic
         redirectAttributes.addFlashAttribute("message", "Music mis à jour avec succès !");
-        return "redirect:/music/";
+        return "redirect:/music";
     }
 
     @PostMapping("/{id}/delete") // Consider using @PostMapping for delete operations for better practice
     public String deleteMusic(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         musicService.deleteMusic(id);
         redirectAttributes.addFlashAttribute("message", "Music supprimé avec succès !");
-        return "redirect:/music/";
+        return "redirect:/music";
     }
 
 }

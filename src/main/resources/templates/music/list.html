@@ -99,6 +99,42 @@
             margin-bottom: 30px;
         }
 
+        .notification {
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .notification-success {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid #10b981;
+        }
+
+        .notification-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid #ef4444;
+        }
+
         table {
             width: 100%;
             border-collapse: separate;
@@ -255,6 +291,18 @@
         </div>
 
         <div class="content">
+            <!-- Success Notification -->
+            <div th:if="${message}" class="notification notification-success">
+                <span>✅</span>
+                <span th:text="${message}"></span>
+            </div>
+
+            <!-- Error Notification -->
+            <div th:if="${errorMessage}" class="notification notification-error">
+                <span>❌</span>
+                <span th:text="${errorMessage}"></span>
+            </div>
+
             <table th:if="${musics != null and !musics.isEmpty()}">
                 <thead>
                     <tr>

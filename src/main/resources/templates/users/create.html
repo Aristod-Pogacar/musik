@@ -85,7 +85,8 @@
             margin-bottom: 8px;
         }
 
-        .form-group input {
+        .form-group input,
+        .form-group select {
             width: 100%;
             padding: 14px 16px;
             font-size: 15px;
@@ -97,7 +98,8 @@
             background: white;
         }
 
-        .form-group input:focus {
+        .form-group input:focus,
+        .form-group select:focus {
             border-color: #667eea;
             box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
         }
@@ -215,6 +217,17 @@
                     <span class="required">*</span>
                 </label>
                 <input type="password" id="confirmPassword" name="confirmPassword" placeholder="••••••••" required>
+            </div>
+
+            <div class="form-group">
+                <label for="role">
+                    Je veux...
+                    <span class="required">*</span>
+                </label>
+                <select id="role" name="role" required>
+                    <option value="USER">🎧 Écouter de la musique (Auditeur)</option>
+                    <option value="ADMIN">🎵 Partager ma musique (Artiste)</option>
+                </select>
             </div>
 
             <button type="submit" class="btn-signup">S'inscrire</button>

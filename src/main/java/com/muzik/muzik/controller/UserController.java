@@ -36,7 +36,7 @@ public class UserController {
     public String createUser(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
         userService.saveUser(user);
         redirectAttributes.addFlashAttribute("message", "Utilisateur créé avec succès !");
-        return "redirect:/users";
+        return "redirect:/login";
     }
 
     @GetMapping("/{id}")

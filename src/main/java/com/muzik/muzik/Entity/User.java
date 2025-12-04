@@ -19,6 +19,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Music> musics = new ArrayList<>();
 
+    private String role = "USER";  // USER ou ADMIN
     // Constructors
     public User() {
     }
@@ -77,5 +78,13 @@ public class User {
 
     public void setMusics(List<Music> musics) {
         this.musics = musics;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

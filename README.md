@@ -90,5 +90,3 @@ Les fichiers se trouvent dans `src/main/resources/templates`.
 *   **Rôles dynamiques** : L'interface s'adapte selon si vous êtes un simple auditeur ou un créateur de contenu.
 *   **Design Responsive** : L'application fonctionne sur mobile et ordinateur.
 
----
-*Généré par Antigravity Assistant*

@@ -367,29 +367,164 @@
         .time-info {
             display: flex;
             justify-content: space-between;
+            font-size: 12px;
+            color: #a0a0a0;
         }
 
-        /* <--- THE MISSING CLOSING BRACE IS HERE */
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 100px 20px;
+            color: #a0a0a0;
+        }
+
+        .empty-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        /* Admin Link */
+        /* Logout Button */
+        .logout-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 12px 24px;
+            border-radius: 30px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .admin-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 36px;
+            }
+
+            .music-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 16px;
+            }
+
+            .player-content {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .now-playing-info {
+                width: 100%;
+            }
+
+            .progress-container {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <script th:inline="javascript">
-        // Element references (assuming they exist in the HTML body)
-        const audioElement = new Audio();
-        const audioPlayer = document.querySelector('.audio-player'); // Assuming an element with this class exists
-        const nowPlayingTitle = document.querySelector('.now-playing-title'); // Assuming an element with this class exists
-        const nowPlayingArtist = document.querySelector('.now-playing-artist'); // Assuming an element with this class exists
-        const playPauseBtn = document.querySelector('.control-btn.play-pause'); // Assuming an element with this class exists
-        const nextBtn = document.querySelector('.control-btn[onclick="nextTrack()"]'); // Assuming an element with this attribute exists
-        const prevBtn = document.querySelector('.control-btn[onclick="previousTrack()"]'); // Assuming an element with this attribute exists
-        const progressFill = document.querySelector('.progress-fill'); // Assuming an element with this class exists
-        const progressBar = document.querySelector('.progress-bar'); // Assuming an element with this class exists
-        const currentTimeEl = document.querySelector('.current-time'); // Assuming an element with this class exists
-        const durationEl = document.querySelector('.duration-time'); // Assuming an element with this class exists
+
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <span class="logo-icon">🎵</span>
+                <h1 class="logo-text">Muzik</h1>
+            </div>
+            <p class="tagline">Écoutez votre musique préférée</p>
+        </div>
+
+        <div class="categories-filter">
+            <a th:href="@{/player}" class="category-btn" th:classappend="${selectedCategory == null} ? 'active' : ''">
+                🎶 Toutes les musiques
+            </a>
+            <a th:each="cat : ${categories}" th:href="@{/player/category/{id}(id=${cat.id})}" class="category-btn"
+                th:classappend="${selectedCategory != null && selectedCategory.id == cat.id} ? 'active' : ''">
+                <span th:text="${cat.nom}"></span>
+            </a>
+        </div>
+
+        <div class="music-grid" th:if="${musics != null and !musics.isEmpty()}">
+            <div class="music-card" th:each="music : ${musics}"
+                th:attr="data-id=${music.id}, data-title=${music.titre}, data-artist=${music.artiste}, data-file=${music.file}"
+                onclick="playMusic(this)">
+                <div class="album-art">
+                    🎵
+                    <div class="play-overlay">
+                        <span class="play-btn-overlay">▶️</span>
+                    </div>
+                </div>
+                <div class="music-info">
+                    <div class="music-title" th:text="${music.titre}">Titre</div>
+                    <div class="music-artist" th:text="${music.artiste}">Artiste</div>
+                    <div class="music-album" th:text="${music.album}">Album</div>
+                    <span class="music-category" th:text="${music.category.nom}">Catégorie</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="empty-state" th:if="${musics == null or musics.isEmpty()}">
+            <div class="empty-icon">🎵</div>
+            <h2>Aucune musique disponible</h2>
+            <p>Revenez plus tard pour découvrir de nouvelles musiques !</p>
+        </div>
+    </div>
+
+    <!-- Audio Player -->
+    <div class="audio-player" id="audioPlayer">
+        <div class="player-content">
+            <div class="now-playing-info">
+                <div class="now-playing-art">🎵</div>
+                <div class="now-playing-details">
+                    <div class="now-playing-title" id="nowPlayingTitle">Aucune musique</div>
+                    <div class="now-playing-artist" id="nowPlayingArtist">-</div>
+                </div>
+            </div>
+
+            <div class="player-controls">
+                <button class="control-btn" onclick="previousTrack()">⏮️</button>
+                <button class="control-btn play-pause" id="playPauseBtn" onclick="togglePlayPause()">▶️</button>
+                <button class="control-btn" onclick="nextTrack()">⏭️</button>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar" onclick="seek(event)">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="time-info">
+                    <span id="currentTime">0:00</span>
+                    <span id="duration">0:00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="audioElement" style="display: none;"></audio>
+
+    <script>
+        const audioElement = document.getElementById('audioElement');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const progressFill = document.getElementById('progressFill');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+        const nowPlayingTitle = document.getElementById('nowPlayingTitle');
+        const nowPlayingArtist = document.getElementById('nowPlayingArtist');
 
         let currentMusicCard = null;
-        const playlist = [];
+        let playlist = [];
         let currentIndex = -1;
 
         // Initialize playlist
@@ -417,7 +552,6 @@
             if (currentMusicCard) {
                 currentMusicCard.classList.remove('playing');
             }
-
             currentMusicCard = card;
             card.classList.add('playing');
 
@@ -436,9 +570,7 @@
             if (audioElement.paused) {
                 audioElement.play();
                 playPauseBtn.textContent = '⏸️';
-            }
-
-            else {
+            } else {
                 audioElement.pause();
                 playPauseBtn.textContent = '▶️';
             }
@@ -467,7 +599,6 @@
         function formatTime(seconds) {
             const mins = Math.floor(seconds / 60);
             const secs = Math.floor(seconds % 60);
-
             return `${mins}:${secs.toString().padStart(2, '0')}`;
         }
 
